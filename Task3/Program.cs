@@ -18,25 +18,17 @@ namespace Task3
                 graphs.Add(new Graph(new Connection(new int[] { Convert.ToInt32(conn[0]), Convert.ToInt32(conn[1]) })));
             }
 
-            var merges = 1;
-            while (merges > 0)
+            foreach (Graph graph in graphs)
             {
-                merges = 0;
-                foreach(Graph graph in graphs)
+                if (graph.isEmpty())
+                    continue;
+                foreach (Graph graphToCheck in graphs)
                 {
-                    if (graph.isEmpty())
+                    if (graph.isTheSameWith(graphToCheck) || graph.isEmpty() || graphToCheck.isEmpty())
                         continue;
-                    foreach (Graph graphToCheck in graphs)
-                    {
-                        if (graph.isTheSameWith(graphToCheck) || graph.isEmpty() || graphToCheck.isEmpty())
-                            continue;
 
-                        if (graph.hasCommonPartWith(graphToCheck))
-                        {
-                            graph.mergeWith(graphToCheck);
-                            merges++;
-                        }
-                    }
+                    if (graph.hasCommonPartWith(graphToCheck))
+                        graph.mergeWith(graphToCheck);
                 }
             }
 
